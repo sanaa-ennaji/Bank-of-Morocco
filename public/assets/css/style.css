@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap');
+
+* {
+    font-family: 'Barlow', sans-serif;
+}
+
+.logo-text {
+    font-family: 'Vina Sans', sans-serif;
+}
+
+.hoverable {
+    transition: ease 0.5s;
+}
+
+.hoverable:hover {
+    color: violet;
+}
