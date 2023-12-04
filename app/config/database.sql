@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS user (
     id VARCHAR(50) PRIMARY KEY,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    nationalite VARCHAR(50),
+    nationality VARCHAR(50),
     gendre VARCHAR(50),
     address_id VARCHAR(50),
     agency_id VARCHAR(50),
