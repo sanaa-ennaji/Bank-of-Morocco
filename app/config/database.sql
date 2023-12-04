@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS bank_7;
 USE bank_7;
 
 -- Address Table
-CREATE TABLE address (
+CREATE TABLE IF NOT EXISTS address (
     id VARCHAR(50) PRIMARY KEY,
     city VARCHAR(50),
     district VARCHAR(50),
@@ -13,7 +13,7 @@ CREATE TABLE address (
 );
 
 -- Permission Table
-CREATE TABLE permission (
+CREATE TABLE IF NOT EXISTS permission (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(50),
     description VARCHAR(255)
@@ -22,7 +22,7 @@ CREATE TABLE permission (
 
 
 -- Role Table
-CREATE TABLE role (
+CREATE TABLE IF NOT EXISTS role (
     name VARCHAR(50) PRIMARY KEY
 );
 
@@ -30,14 +30,14 @@ CREATE TABLE role (
 
 
 -- Bank Table
-CREATE TABLE bank (
+CREATE TABLE IF NOT EXISTS bank (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(20) UNIQUE,
     logo VARCHAR(100)
 );
 
 -- Agency Table
-CREATE TABLE agency (
+CREATE TABLE IF NOT EXISTS agency (
     id VARCHAR(50) PRIMARY KEY,
     longitude DECIMAL(9,6),
     latitude DECIMAL(9,6),
@@ -50,7 +50,7 @@ CREATE TABLE agency (
 );
 
 -- Distributer Table
-CREATE TABLE distributer (
+CREATE TABLE IF NOT EXISTS distributer (
     id VARCHAR(50) PRIMARY KEY,
     longitude DECIMAL(9,6),
     latitude DECIMAL(9,6),
@@ -61,7 +61,7 @@ CREATE TABLE distributer (
 
 
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
     id VARCHAR(50) PRIMARY KEY,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
@@ -73,7 +73,7 @@ CREATE TABLE user (
 );
 
 -- Account Table
-CREATE TABLE account (
+CREATE TABLE IF NOT EXISTS account (
     id VARCHAR(50) PRIMARY KEY,
     rib VARCHAR(20),
     currency VARCHAR(10),
@@ -83,7 +83,7 @@ CREATE TABLE account (
 );
 
 -- Transaction Table
-CREATE TABLE transaction (
+CREATE TABLE IF NOT EXISTS transaction (
     id VARCHAR(50) PRIMARY KEY,
     type ENUM('credit', 'debit'),
     amount DECIMAL(10,2),
@@ -91,7 +91,7 @@ CREATE TABLE transaction (
     FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE roleOfUser (
+CREATE TABLE IF NOT EXISTS roleOfUser (
     id VARCHAR(50) PRIMARY KEY,
     role_id VARCHAR(50),
     user_id VARCHAR(50),
@@ -99,7 +99,7 @@ CREATE TABLE roleOfUser (
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE permissionOfRole (
+CREATE TABLE IF NOT EXISTS permissionOfRole (
     id VARCHAR(50) PRIMARY KEY,
     permission_id VARCHAR(50),
     role_id VARCHAR(50),
