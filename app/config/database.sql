@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS address (
     telephone INT
 );
 
--- Permission Table
+-- Permission Taqle
 CREATE TABLE IF NOT EXISTS permission (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(50),
