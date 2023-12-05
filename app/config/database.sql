@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS bank (
 -- Agency Table
 CREATE TABLE IF NOT EXISTS agency (
     id VARCHAR(50) PRIMARY KEY,
-    longitude DECIMAL(9,6),
-    latitude DECIMAL(9,6),
+    longitude VARCHAR(20),
+    latitude VARCHAR(20),
     bank_id VARCHAR(50),
     address_id VARCHAR(50),
     FOREIGN KEY (bank_id) REFERENCES bank(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS agency (
 );
 
 -- Distributer Table
-CREATE TABLE IF NOT EXISTS distributer (
+CREATE TABLE IF NOT EXISTS atm (
     id VARCHAR(50) PRIMARY KEY,
-    longitude DECIMAL(9,6),
-    latitude DECIMAL(9,6),
+    longitude VARCHAR(20),
+    latitude VARCHAR(20),
     adresse VARCHAR(100),
     bank_id VARCHAR(50),
     FOREIGN KEY (bank_id) REFERENCES bank(id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -1,13 +1,16 @@
 <?php
 
-require_once("DataProvider.php");
+require_once("db.php");
 
-class Distributer extends DataProvider {
+class Atm extends Database {
 
-    public function insert($address, $longitude, $latitude, $bankId) {
+    public function add($id, $address, $longitude, $latitude, $bankId) {
+        $db = $this->connect();
+
         try {
-            $sql = "INSERT INTO atm (address, longitude, latitude, bankId) VALUES (:address, :longitude, :latitude, :bankId)";
-            $stmt = $this->connect()->prepare($sql);
+            $sql = "INSERT INTO atm VALUES (:id, :address, :longitude, :latitude, :bankId)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":address", $address);
             $stmt->bindParam(":longitude", $longitude);
             $stmt->bindParam(":latitude", $latitude);
@@ -19,9 +22,11 @@ class Distributer extends DataProvider {
     }
 
     public function display() {
+        $db = $this->connect();
+
         try {
             $sql = "SELECT * FROM atm";
-            $query = $this->connect()->query($sql);
+            $query = $db->query($sql);
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
         } catch (PDOException $e) {
@@ -29,10 +34,12 @@ class Distributer extends DataProvider {
         }
     }
 
-    public function displayOne($id) {
+    public function search($id) {
+        $db = $this->connect();
+
         try {
-            $sql = "SELECT * FROM atm WHERE atmId = :id";
-            $stmt = $this->connect()->prepare($sql);
+            $sql = "SELECT * FROM atm WHERE id = :id";
+            $stmt = $db->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -42,10 +49,13 @@ class Distributer extends DataProvider {
         }
     }
 
-    public function update($id, $address, $longitude, $latitude) {
+    public function edit($id, $address, $longitude, $latitude) {
+        $db = $this->connect();
+
+
         try {
-            $sql = "UPDATE atm SET address = :address, longitude = :longitude, latitude = :latitude WHERE atmId = :id";
-            $stmt = $this->connect()->prepare($sql);
+            $sql = "UPDATE atm SET address = :address, longitude = :longitude, latitude = :latitude WHERE id = :id";
+            $stmt = $db->prepare($sql);
             $stmt->bindParam(":address", $address);
             $stmt->bindParam(":longitude", $longitude);
             $stmt->bindParam(":latitude", $latitude);
@@ -57,9 +67,11 @@ class Distributer extends DataProvider {
     }
 
     public function delete($id) {
+        $db = $this->connect();
+
         try {
-            $sql = "DELETE FROM atm WHERE atmId = :id";
-            $stmt = $this->connect()->prepare($sql);
+            $sql = "DELETE FROM atm WHERE id = :id";
+            $stmt = $db->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (PDOException $e) {

@@ -131,6 +131,25 @@
             }
 
         }
+
+        public function getId($username){
+            $db = $this->connect();
+
+            try {
+                $sql = "SELECT * FROM user WHERE username = :username";
+
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(":username", $username);
+
+                $stmt->execute();
+
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                die("Error: " . $e->getMessage());
+            }
+
+        }
     }
 
 ?>
