@@ -1,15 +1,31 @@
 <?php
 
-require_once("DataProvider.php");
+require_once("db.php");
 
-class Transaction extends DataProvider {
+class Transaction extends Database {
     
-    public function insert($amount, $type){
+    public function add($id, $amount, $type, $accountId){
         try {
-            $sql = "INSERT INTO transaction (amount, type) VALUES (:amount, :type)";
+            $sql = "INSERT INTO transaction VALUES (:id, :amount, :type, :accountId)";
             $stmt = $this->connect()->prepare($sql); 
+            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":amount", $amount);
             $stmt->bindParam(":type", $type);
+            $stmt->bindParam(":accountId", $accountId);
+            $stmt->execute();
+        } catch (PDOException $e){
+            die("Error: ". $e->getMessage());
+        }
+    }
+
+    public function edit($id, $amount, $type, $accountId){
+        try {
+            $sql = "UPDATE transaction SET amount = :amount, type = :type, account_id = :accountId WHERE id = :id";
+            $stmt = $this->connect()->prepare($sql); 
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":amount", $amount);
+            $stmt->bindParam(":type", $type);
+            $stmt->bindParam(":accountId", $accountId);
             $stmt->execute();
         } catch (PDOException $e){
             die("Error: ". $e->getMessage());
@@ -28,9 +44,9 @@ class Transaction extends DataProvider {
     }
 
     
-    public function displayOne($id){
+    public function search($id){
         try {
-            $sql = "SELECT * FROM transaction WHERE transactionId = :id";
+            $sql = "SELECT * FROM transaction WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
@@ -44,7 +60,7 @@ class Transaction extends DataProvider {
 
     public function delete($id){
         try {
-            $sql = "DELETE FROM transaction WHERE transactionId = :id";
+            $sql = "DELETE FROM transaction WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();

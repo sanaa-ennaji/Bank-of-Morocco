@@ -1,12 +1,12 @@
 <?php
 
-    require_once("cnx.php");
+    require_once("db.php");
 
-    class Bank extends DataProvider {
+    class Bank extends Database {
         
-        public function insert($name, $logo){
+        public function add($id, $name, $logo){
             try {
-                $sql = "INSERT INTO bank (name, logo) VALUES (:name, :logo)";
+                $sql = "INSERT INTO bank VALUES (:id, :name, :logo)";
                 $stmt = $this->connect()->prepare($sql); 
                 $stmt->bindParam(":name", $name);
                 $stmt->bindParam(":logo", $logo);
@@ -27,9 +27,9 @@
             }
         }
 
-        public function displayOne($id){
+        public function search($id){
             try {
-                $sql = "SELECT * FROM bank WHERE bankId = :id";
+                $sql = "SELECT * FROM bank WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
@@ -40,9 +40,9 @@
             }
         }
 
-        public function update($id, $name, $logo){
+        public function edit($id, $name, $logo){
             try {
-                $sql = "UPDATE bank SET name = :name, logo = :logo WHERE bankId = :id";
+                $sql = "UPDATE bank SET name = :name, logo = :logo WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":name", $name);
                 $stmt->bindParam(":logo", $logo);
@@ -56,7 +56,7 @@
 
         public function delete($id){
             try {
-                $sql = "DELETE FROM bank WHERE bankId = :id";
+                $sql = "DELETE FROM bank WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();

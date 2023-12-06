@@ -1,13 +1,14 @@
 <?php
 
-    require_once("cnx.php");
+    require_once("db.php");
 
-    class Agency extends Dataprovider {
+    class Agency extends Database {
         
-        public function insert($longitude, $latitude, $bank_id, $address_id){
+        public function add($id, $longitude, $latitude, $bank_id, $address_id){
             try {
-                $sql = "INSERT INTO agency (longitude, latitude, bank_id, address_id) VALUES (:longitude, :latitude, :bank_id, :address_id)";
+                $sql = "INSERT INTO agency VALUES (:id, :longitude, :latitude, :bank_id, :address_id)";
                 $stmt = $this->connect()->prepare($sql); 
+                $stmt->bindParam(":id", $id);
                 $stmt->bindParam(":longitude", $longitude);
                 $stmt->bindParam(":latitude", $latitude);
                 $stmt->bindParam(":longitude", $bank_id);
@@ -34,9 +35,9 @@
             }
         }
 
-        public function displayOne($id){
+        public function search($id){
             try {
-                $sql = "SELECT * FROM agency WHERE agencyId = :id";
+                $sql = "SELECT * FROM agency WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
@@ -47,9 +48,9 @@
             }
         }
 
-        public function update($id, $longitude, $latitude, $bank_id, $address_id){
+        public function edit($id, $longitude, $latitude, $bank_id, $address_id){
             try {
-                $sql = "UPDATE agency SET longitude = :longitude, latitude = :latitude, bank_id = :bank_id, address_id = :address_id WHERE agencyId = :id";
+                $sql = "UPDATE agency SET longitude = :longitude, latitude = :latitude, bank_id = :bank_id, address_id = :address_id WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":longitude", $longitude);
                 $stmt->bindParam(":latitude", $latitude);
@@ -65,7 +66,7 @@
 
         public function delete($id){
             try {
-                $sql = "DELETE FROM agency WHERE agencyId = :id";
+                $sql = "DELETE FROM agency WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
