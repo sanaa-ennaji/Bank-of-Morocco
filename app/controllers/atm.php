@@ -1,7 +1,7 @@
 <?php
 
-    require_once("../models/random.php");
-    require_once("../models/atm.php");
+    require_once(__DIR__ . "/../models/random.php");
+    require_once(__DIR__ . "/../models/atm.php");
 
     $atm = new Atm();
 

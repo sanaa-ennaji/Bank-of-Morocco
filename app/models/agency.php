@@ -18,11 +18,6 @@
                 die("Error: ". $e->getMessage());
             }
         }
-        
-
-      
-
-
 
         public function display(){
             try {
@@ -48,14 +43,13 @@
             }
         }
 
-        public function edit($id, $longitude, $latitude, $bank_id, $address_id){
+        public function edit($id, $longitude, $latitude, $bank_id){
             try {
-                $sql = "UPDATE agency SET longitude = :longitude, latitude = :latitude, bank_id = :bank_id, address_id = :address_id WHERE id = :id";
+                $sql = "UPDATE agency SET longitude = :longitude, latitude = :latitude, bank_id = :bank_id WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":longitude", $longitude);
                 $stmt->bindParam(":latitude", $latitude);
                 $stmt->bindParam(":bank_id", $bank_id);
-                $stmt->bindParam(":address_id", $address_id);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
             } catch (PDOException $e){
