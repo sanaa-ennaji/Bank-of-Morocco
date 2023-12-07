@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS atm (
     id VARCHAR(50) PRIMARY KEY,
     longitude VARCHAR(20),
     latitude VARCHAR(20),
-    adresse VARCHAR(100),
+    address VARCHAR(100),
     bank_id VARCHAR(50),
     FOREIGN KEY (bank_id) REFERENCES bank(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
