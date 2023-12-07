@@ -1,8 +1,8 @@
 <?php
 
-    require_once("../models/random.php");
-    require_once("../models/address.php");
-    require_once("../models/agency.php");
+    require_once(__DIR__ . "/../models/random.php");
+    require_once(__DIR__ . "/../models/address.php");
+    require_once(__DIR__ . "/../models/agency.php");
 
     $address = new Address();
     $agency = new Agency();
@@ -77,7 +77,7 @@
 
     // ---------=  DISPLAY =--------- //
     
-    $agencies = $agency->displayAll();
+    $agencies = $agency->display();
 
 
 ?>

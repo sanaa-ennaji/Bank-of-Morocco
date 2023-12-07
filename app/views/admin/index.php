@@ -2,7 +2,10 @@
 <html lang="en">
 
 <!--  HEAD  -->
-<?php include("components/head.html") ?>
+<head>
+    <?php include("components/head.html") ?>
+    <title>Admin Dashboard</title>
+</head>
 <!--  HEAD  -->
 
 <body class="h-[100vh] w-full flex">

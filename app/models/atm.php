@@ -49,16 +49,17 @@ class Atm extends Database {
         }
     }
 
-    public function edit($id, $address, $longitude, $latitude) {
+    public function edit($id, $address, $longitude, $latitude, $bankId) {
         $db = $this->connect();
 
 
         try {
-            $sql = "UPDATE atm SET address = :address, longitude = :longitude, latitude = :latitude WHERE id = :id";
+            $sql = "UPDATE atm SET address = :address, longitude = :longitude, latitude = :latitude, bank_id = :bank_id WHERE id = :id";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":address", $address);
             $stmt->bindParam(":longitude", $longitude);
             $stmt->bindParam(":latitude", $latitude);
+            $stmt->bindParam(":bank_id", $bankId);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (PDOException $e) {
