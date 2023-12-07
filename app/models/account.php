@@ -1,13 +1,14 @@
 <?php
 
-    require_once("DataProvider.php");
+    require_once("db.php");
 
-    class account extends DataProvider {
+    class account extends Database {
         
-        public function insert($rib, $currency, $balance){
+        public function insert($id, $rib, $currency, $balance){
             try {
-                $sql = "INSERT INTO account (rib, currency, balance) VALUES (:rib, :currency, :balance)";
+                $sql = "INSERT INTO account VALUES (:id, :rib, :currency, :balance)";
                 $stmt = $this->connect()->prepare($sql); 
+                $stmt->bindParam(":id", $id);
                 $stmt->bindParam(":rib", $rib);
                 $stmt->bindParam(":currency", $currency);
                 $stmt->bindParam(":balance", $balance);
@@ -28,9 +29,9 @@
             }
         }
 
-        public function displayOne($id){
+        public function search($id){
             try {
-                $sql = "SELECT * FROM account WHERE accountId = :id";
+                $sql = "SELECT * FROM account WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
@@ -41,9 +42,9 @@
             }
         }
 
-        public function update($id, $rib, $currency, $balance){
+        public function edit($id, $rib, $currency, $balance){
             try {
-                $sql = "UPDATE account SET rib = :rib, currency = :currency, balance = :balance WHERE accountId = :id";
+                $sql = "UPDATE account SET rib = :rib, currency = :currency, balance = :balance WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":rib", $rib);
                 $stmt->bindParam(":currency", $currency);
@@ -58,7 +59,7 @@
 
         public function delete($id){
             try {
-                $sql = "DELETE FROM account WHERE accountId = :id";
+                $sql = "DELETE FROM account WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();

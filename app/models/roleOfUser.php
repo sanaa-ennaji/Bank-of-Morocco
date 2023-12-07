@@ -1,16 +1,15 @@
- <!-- #region -->
  <?php
 
-require_once("DataProvider.php");
+require_once("db.php");
 
-class User extends DataProvider {
+class roleOfUser extends Database {
 
-    public function insert($userName, $roleId) {
+    public function add($id, $user, $role) {
         try {
-            $sql = "INSERT INTO users (userName, roleId) VALUES (:userName, :roleId)";
+            $sql = "INSERT INTO roleOfUSer VALUES (:id, :user, :role)";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->bindParam(":userName", $userName);
-            $stmt->bindParam(":roleId", $roleId);
+            $stmt->bindParam(":user", $user);
+            $stmt->bindParam(":role", $role);
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
@@ -19,7 +18,7 @@ class User extends DataProvider {
 
     public function display() {
         try {
-            $sql = "SELECT * FROM users";
+            $sql = "SELECT * FROM roleOfUser";
             $query = $this->connect()->query($sql);
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
@@ -28,24 +27,24 @@ class User extends DataProvider {
         }
     }
 
-    public function update($userId, $userName, $roleId) {
+    public function edit($id, $user, $role) {
         try {
-            $sql = "UPDATE users SET userName = :userName, roleId = :roleId WHERE userId = :userId";
+            $sql = "UPDATE roleOfUser SET user_id = :user, role_id = :role WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->bindParam(":userName", $userName);
-            $stmt->bindParam(":roleId", $roleId);
-            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":user", $user);
+            $stmt->bindParam(":role", $role);
+            $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
         }
     }
 
-    public function delete($userId) {
+    public function delete($id) {
         try {
-            $sql = "DELETE FROM users WHERE userId = :userId";
+            $sql = "DELETE FROM roleOfUser WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
@@ -54,4 +53,3 @@ class User extends DataProvider {
 }
 
 ?>
-
