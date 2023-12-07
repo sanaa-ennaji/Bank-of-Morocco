@@ -21,9 +21,10 @@ $(document).ready(function(){
 
             $(this).next().remove();
             $(this).remove();
-
-            let $html = $(`<option value="${$(this).val()}" id="${$(this).val()}">${$(this).val()}</option>`);
-            $("#select").append($html);
+            if(!$("#select").find(`#${$(this).val()}`).length){
+                let $html = $(`<option value="${$(this).val()}" id="${$(this).val()}">${$(this).val()}</option>`);
+                $("#select").append($html);
+            }
 
 
         });

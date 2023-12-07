@@ -1,7 +1,7 @@
 <?php
 
-    require_once("../models/random.php");
-    require_once("../models/transaction.php");
+    require_once(__DIR__ . "/../models/random.php");
+    require_once(__DIR__ . "/../models/transaction.php");
 
     $transaction = new Transaction();
 
@@ -51,6 +51,8 @@
     // ---------  DISPLAY --------- //
     
     $transactions = $transaction->display();
+
+    // var_dump($transactions);
 
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 
-    require_once("../models/random.php");
-    require_once("../models/address.php");
-    require_once("../models/user.php");
-    require_once("../models/roleOfUser.php");
+    require_once(__DIR__ . "/../models/random.php");
+    require_once(__DIR__ . "/../models/address.php");
+    require_once(__DIR__ . "/../models/user.php");
+    require_once(__DIR__ . "/../models/roleOfUser.php");
 
     $address = new Address();
     $user = new User();
