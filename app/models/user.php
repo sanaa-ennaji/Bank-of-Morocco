@@ -26,11 +26,11 @@
 
         }
 
-        public function edit($id, $username, $password, $nationality, $gendre, $address_id, $agency_id){
+        public function edit($id, $username, $password, $nationality, $gendre, $agency_id){
             $db = $this->connect();
 
             try {
-                $sql = "UPDATE user SET username = :username, password = :password, nationality = :nationality, gendre = :gendre, address_id = :address_id, agency_id = :agency_id WHERE id = :id";
+                $sql = "UPDATE user SET username = :username, password = :password, nationality = :nationality, gendre = :gendre, agency_id = :agency_id WHERE id = :id";
 
                 $stmt = $db->prepare($sql);
 
@@ -38,7 +38,6 @@
                 $stmt->bindParam(":password", $password);
                 $stmt->bindParam(":nationality", $nationality);
                 $stmt->bindParam(":gendre", $gendre);
-                $stmt->bindParam(":address_id", $address_id);
                 $stmt->bindParam(":agency_id", $agency_id);
                 $stmt->bindParam(":id", $id);
 
@@ -104,7 +103,7 @@
             $db = $this->connect();
 
             try {
-                $sql = "SELECT * FROM user JOIN roleOfUser ON user.id = roleOfUser.id JOIN role ON roleOfUser.id = role.name";
+                $sql = "SELECT * FROM user JOIN roleOfUser ON user.id = roleOfUser.user_id JOIN role ON roleOfUser.role_id = role.name";
 
                 $data = $db->query($sql);
 
