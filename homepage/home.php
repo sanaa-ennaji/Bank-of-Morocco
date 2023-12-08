@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>bank </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   </head>
   <body>
@@ -13,7 +13,7 @@
       <label for="check" class="checkbtn">
         <i class="fas fa-bars"></i>
       </label>
-      <label class="logo"> <img src="bank.png" alt=""></label>
+      <label class="logo"> <img src="img/bank.png" alt=""></label>
       <ul>
         <li><a class="active" href="#">Home</a></li>
         <li><a href="#">About</a></li>
@@ -30,7 +30,7 @@
 
 </div>
 </div>
-<img src="banking-illustration.png" alt="bank">
+<img src="img/banking-illustration.png" alt="bank">
     </section>
 
 
