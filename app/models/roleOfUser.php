@@ -2,7 +2,7 @@
 
 require_once("db.php");
 
-class roleOfUser extends Database {
+class RoleOfUser extends Database {
 
     public function add($id, $user, $role) {
         try {

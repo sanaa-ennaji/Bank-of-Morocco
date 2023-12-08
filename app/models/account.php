@@ -4,14 +4,15 @@
 
     class account extends Database {
         
-        public function insert($id, $rib, $currency, $balance){
+        public function add($id, $rib, $currency, $balance, $userId){
             try {
-                $sql = "INSERT INTO account VALUES (:id, :rib, :currency, :balance)";
+                $sql = "INSERT INTO account VALUES (:id, :rib, :currency, :balance, :user_id)";
                 $stmt = $this->connect()->prepare($sql); 
                 $stmt->bindParam(":id", $id);
                 $stmt->bindParam(":rib", $rib);
                 $stmt->bindParam(":currency", $currency);
                 $stmt->bindParam(":balance", $balance);
+                $stmt->bindParam(":user_id", $userId);
                 $stmt->execute();
             } catch (PDOException $e){
                 die("Error: ". $e->getMessage());
@@ -42,9 +43,9 @@
             }
         }
 
-        public function edit($id, $rib, $currency, $balance){
+        public function edit($id, $rib, $currency, $balance, $userId){
             try {
-                $sql = "UPDATE account SET rib = :rib, currency = :currency, balance = :balance WHERE id = :id";
+                $sql = "UPDATE account SET rib = :rib, currency = :currency, balance = :balance, user_id = :user_id WHERE id = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":rib", $rib);
                 $stmt->bindParam(":currency", $currency);
