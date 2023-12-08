@@ -3,11 +3,11 @@
     require_once("db.php");
 
     class Address extends Database {
-        public function add($id, $city, $district, $street, $code_postal, $email, $telephone){
+        public function add($id, $city, $district, $street, $code_postal, $email, $telephone, $date){
             $db = $this->connect();
 
             try {
-                $sql = "INSERT INTO address VALUES (:id, :city, :district, :street, :code_postal, :email, :telephone)";
+                $sql = "INSERT INTO address VALUES (:id, :city, :district, :street, :code_postal, :email, :telephone, :date)";
 
                 $stmt = $db->prepare($sql);
 
@@ -18,6 +18,7 @@
                 $stmt->bindParam(":code_postal", $code_postal);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":telephone", $telephone);
+                $stmt->bindParam(":date", $date);
 
                 $stmt->execute();
             } catch (PDOException $e) {
@@ -26,18 +27,18 @@
 
         }
 
-        public function edit($id, $city, $district, $street, $code_postal, $email, $telephone){
+        public function edit($id, $city, $district, $street, $postal_code, $email, $telephone){
             $db = $this->connect();
 
             try {
-                $sql = "UPDATE address SET city = :city, district = :district, street = :street, code_postal = :code_postal, email = :email, telephone = :telephone WHERE id = :id";
+                $sql = "UPDATE address SET city = :city, district = :district, street = :street, postal_code = :postal_code, email = :email, telephone = :telephone WHERE id = :id";
 
                 $stmt = $db->prepare($sql);
 
                 $stmt->bindParam(":city", $city);
                 $stmt->bindParam(":district", $district);
                 $stmt->bindParam(":street", $street);
-                $stmt->bindParam(":code_postal", $code_postal);
+                $stmt->bindParam(":postal_code", $postal_code);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":telephone", $telephone);
                 $stmt->bindParam(":id", $id);
@@ -104,7 +105,7 @@
             $db = $this->connect();
 
             try {
-                $sql = "SELECT * FROM address ORDER BY id DESC LIMIT 1";
+                $sql = "SELECT * FROM address ORDER BY date DESC LIMIT 1";
 
                 $data = $db->query($sql);
 

@@ -1,3 +1,11 @@
+<?php
+
+require("components/check.php");
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

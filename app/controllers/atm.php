@@ -11,7 +11,7 @@
 
         // ---------  EDIT --------- //
 
-            if(isset($_POST['submit'])) {
+            if(isset($_POST['add'])) {
 
                 $longitude = $_POST['longitude'];
                 $latitude = $_POST['latitude'];

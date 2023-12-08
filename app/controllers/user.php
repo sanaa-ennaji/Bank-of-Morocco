@@ -3,38 +3,86 @@
     require_once(__DIR__ . "/../models/random.php");
     require_once(__DIR__ . "/../models/address.php");
     require_once(__DIR__ . "/../models/user.php");
+    require_once(__DIR__ . "/../models/role.php");
     require_once(__DIR__ . "/../models/roleOfUser.php");
 
     $address = new Address();
     $user = new User();
     $roleOfUser = new RoleOfUser();
+    $role = new Role();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        // ---------  ADDRESS PROPS --------- //
+    // ---------=  ADD =--------- //
+
+        if(isset($_POST['add'])) {
+
+            // ---------  ADDRESS PROPS --------- //
         
-        $city = $_POST['city'];
-        $district = $_POST['district'];
-        $street = $_POST['street'];
-        $codePostal = $_POST['codePostal'];
-        $email = $_POST['email'];
-        $telephone = $_POST['telephone'];
+            $city = $_POST['city'];
+            $district = $_POST['district'];
+            $street = $_POST['street'];
+            $codePostal = $_POST['postal-code'];
+            $email = $_POST['email'];
+            $telephone = $_POST['telephone'];
 
-        // ---------  USER PROPS --------- //
+            // ---------  USER PROPS --------- //
 
-        $username = $_POST['username'];
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $nationality = $_POST['nationality'];
-        $gendre = $_POST['gendre'];
-        $agencyId = $_POST['agency'];
+            $username = $_POST['username'];
+            $password = password_hash($_POST['pw'], PASSWORD_BCRYPT);
+            $nationality = $_POST['nationality'];
+            $gendre = $_POST['gendre'];
+            $agencyId = $_POST['agency'];
 
-        // ---------  ROLE PROPS --------- //
+            // ---------  ROLE PROPS --------- //
 
-        $roleId = $_POST['role'];
+            $roles = explode(',', $_POST['checkboxes']);
+
+            $random = new Random();
+
+            $id = $random->get();
+            $date = date("Y-m-d h:i:s");
+            $address->add($id, $city, $district, $street, $codePostal, $email, $telephone, $date);
+            $lastAddress = $address->getLast();
+            $addressId = $lastAddress['id'];
+
+            $id = $random->get();
+            $date = date("Y-m-d h:i:s");
+            $user->add($id, $username, $password, $nationality, $gendre, $addressId, $agencyId, $date);
+            $lastUser = $user->getLast();
+            $userId = $lastUser['id'];
+
+            // some loop through roles in post
+            foreach($roles as $role):
+                $id = $random->get();
+                $roleOfUser->add($id, $userId, $role);
+            endforeach;
+
+            echo json_encode($lastUser);
 
     // ---------=  EDIT =--------- //
 
-        if(isset($_POST['submit']) && $_POST['submit'] == 'Edit') {
+        } else if(isset($_POST['edit'])) {
+
+            // ---------  ADDRESS PROPS --------- //
+        
+            $city = $_POST['city'];
+            $district = $_POST['district'];
+            $street = $_POST['street'];
+            $codePostal = $_POST['postal-code'];
+            $email = $_POST['email'];
+            $telephone = $_POST['telephone'];
+
+            // ---------  USER PROPS --------- //
+
+            $username = $_POST['username'];
+            $nationality = $_POST['nationality'];
+            $gendre = $_POST['gendre'];
+            $agencyId = $_POST['agency'];
+
+            // ---------  ROLE PROPS --------- //
+
+            $roleId = $_POST['role'];
 
             $id = $_POST['id'];
             $currentUser = $user->search($id);
@@ -42,53 +90,127 @@
 
             $address->edit($currentAddressId, $city, $district, $street, $codePostal, $email, $telephone);
 
-            $user->edit($id, $username, $password, $nationality, $gendre, $agencyId);
+            $user->edit($id, $username, $nationality, $gendre, $agencyId);
+            
+        }  else {
 
-            $roleOfUser->add($id, $userId, $roleId);
+            // Reading value
+            $draw = $_POST['draw'];
+            $row = $_POST['start'];
+            $rowperpage = $_POST['length']; // Rows display per page
+            $columnIndex = $_POST['order'][0]['column']; // Column index
+            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+            $searchValue = $_POST['search']['value']; // Search value
 
-            $transaction->edit($id, $type, $amount, $account);
+            $searchArray = array();
 
-    // ---------=  ADD =--------- //
+            // Search
+            $searchQuery = " ";
+            if($searchValue != ''){
+            $searchQuery = " AND (id LIKE :id OR 
+                    username LIKE :username OR
+                    nationality LIKE :nationality OR
+                    gendre LIKE :gendre OR
+                    role.name LIKE :role) ";
+            $searchArray = array( 
+                    'id'=>"%$searchValue%",
+                    'username'=>"%$searchValue%",
+                    'nationality'=>"%$searchValue%",
+                    'gendre'=>"%$searchValue%",
+                    'role'=>"%$searchValue%"
+            );
+            }
 
-        } else if(isset($_POST['submit']) && $_POST['submit'] == 'Submit') {
+            try {
+                // Total number of records without filtering
+                $totalRecords = $user->totalRecords();
 
-            $random = new Random();
+                // Total number of records with filtering
+                $totalRecordwithFilter = $user->totalRecordwithFilter($searchQuery, $searchArray);
 
-            $id = $random->get();
-            $address->add($id, $city, $district, $street, $codePostal, $email, $telephone);
-            $lastAddress = $address->getLast();
-            $addressId = $lastAddress['id'];
+                // Fetch records
+                $records = $user->filteredRecordwithSorting($searchQuery, $searchArray, $columnName, $columnSortOrder, $row, $rowperpage);
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
 
-            $id = $random->get();
-            $user->add($id, $username, $password, $nationality, $gendre, $addressId, $agencyId);
-            $lastUser = $user->getLast();
-            $userId = $lastUser['id'];
+            $data = array();
 
-            $id = $random->get();
-            $roleOfUser->add($id, $userId, $roleId);
+            foreach ($records as $row) {
+                $data[] = array(
+                    "id"=>$row['id'],
+                    "username"=>$row['username'],
+                    "nationality"=>$row['nationality'],
+                    "gendre"=>$row['gendre'],
+                    "role"=>$row['name'],
+                );
+            }
+
+            // Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+
+            echo json_encode($response);
+
         }
-
-        header("Location: ../../admin/");
     }
 
     // ---------=  DELETE =--------- //
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
+    if (isset($_GET['delete'])) {
+
         if(isset($_GET['id'])) {
 
             $id = $_GET['id'];
-            $user->delete($id);
-            $user->delete($id);
 
-            header("Location: ../../admin/");
+            $currentUser = $user->search($id);
+            $currentAddressId = $currentUser['address_id'];
+            $address->delete($currentAddressId);
+
+            $user->delete($id);
         }
+
+    } else if (isset($_GET['edit'])) {
+            
+        if(isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+            $data = $user->searchAll($id);
+
+            echo json_encode($data);
+
+        }
+
+    } else if (isset($_GET['get'])) {
+
+        if(isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+            $data = $user->getRoles($id);
+
+            echo json_encode($data);
+
+        } else {
+
+            $data = $role->display();
+            echo json_encode($data);
+
+        }
+
+    }
 
     }
 
     // ---------=  DISPLAY =--------- //
     
-    $users = $user->displayAll();
+
 
 
 ?>

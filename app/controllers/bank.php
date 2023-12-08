@@ -12,7 +12,27 @@
         if(isset($_POST['add'])) {
 
             $name = $_POST['name'];
-            $logo = $_POST['logo'];
+
+            $valid_extensions = array('jpeg', 'jpg', 'png');
+            $path = __DIR__ . "/../../public/uploads/";
+
+            $img = $_FILES['logo']['name'];
+            $tmp = $_FILES['logo']['tmp_name'];
+
+            $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+
+            $logo = rand(1000,1000000).$img;
+
+            if(in_array($ext, $valid_extensions)) { 
+                $path = $path.strtolower($logo); 
+                if(move_uploaded_file($tmp,$path)) {
+                    echo "Upload Failed";
+                } else {
+                    echo "Upload Successful";
+                }
+            }
+
+            $logo = strtolower($logo);
 
             $random = new Random();
             
@@ -30,7 +50,25 @@
 
             $id = $_POST['id'];
             $name = $_POST['name'];
-            $logo = $_POST['logo'];
+            $valid_extensions = array('jpeg', 'jpg', 'png');
+            $path = __DIR__ . "/../../public/uploads/";
+
+            $img = $_FILES['logo']['name'];
+            $tmp = $_FILES['logo']['tmp_name'];
+
+            $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+
+            $logo = rand(1000,1000000).$img;
+
+            if(in_array($ext, $valid_extensions)) { 
+                $path = $path.strtolower($logo); 
+                if(move_uploaded_file($tmp,$path)) {
+                    echo "Upload Failed";
+                } else {
+                    echo "Upload Successful";
+                }
+            }
+
             try{
                 $bank->edit($id, $name, $logo);
             } catch (PDOException $e){

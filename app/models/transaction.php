@@ -4,28 +4,28 @@ require_once("db.php");
 
 class Transaction extends Database {
 
-    public function add($id, $amount, $type, $accountId) {
+    public function add($id, $type, $amount, $account_id) {
         try {
-            $sql = "INSERT INTO transaction VALUES (:id, :amount, :type, :account_id)";
+            $sql = "INSERT INTO transaction VALUES (:id, :type, :amount, :account_id)";
             $stmt = $this->connect()->prepare($sql);
             $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":amount", $amount);
             $stmt->bindParam(":type", $type);
-            $stmt->bindParam(":account_id", $accountId); 
+            $stmt->bindParam(":amount", $amount);
+            $stmt->bindParam(":account_id", $account_id); 
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());
         }
     }
 
-    public function edit($id, $amount, $type, $accountId) {
+    public function edit($id, $type, $amount, $account_id) {
         try {
-            $sql = "UPDATE transaction SET amount = :amount, type = :type, account_id = :account_id WHERE id = :id";
+            $sql = "UPDATE transaction SET type = :type, amount = :amount, account_id = :account_id WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
             $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":amount", $amount);
             $stmt->bindParam(":type", $type);
-            $stmt->bindParam(":account_id", $accountId); 
+            $stmt->bindParam(":amount", $amount);
+            $stmt->bindParam(":account_id", $account_id); 
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());

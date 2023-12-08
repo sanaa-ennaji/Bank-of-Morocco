@@ -6,20 +6,30 @@
 
 $name = $_POST['name'];
 $logo = $_POST['logo'];
-
-
 $bank = new Bank();
 
 
-$random = new Random();
+$array = explode(',', $_POST['checks']);
 
-$id = $random->get();
-if(isset($_POST['submit'])) {
-    try{
-        $bank->add($id, $name, $logo);
-    } catch (PDOException $e){
-        die("Error: " . $e->getMessage());
-    }
-}
+foreach($array as $row):
+    $bank->add($row, $row, "11");
+endforeach;
+
+echo json_encode($array);
+
+
+
+
+
+// $random = new Random();
+
+// $id = $random->get();
+// if(isset($_POST['submit'])) {
+//     try{
+//         $bank->add($id, $name, $logo);
+//     } catch (PDOException $e){
+//         die("Error: " . $e->getMessage());
+//     }
+// }
 
 ?>

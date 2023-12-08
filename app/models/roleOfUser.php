@@ -6,8 +6,9 @@ class RoleOfUser extends Database {
 
     public function add($id, $user, $role) {
         try {
-            $sql = "INSERT INTO roleOfUSer VALUES (:id, :user, :role)";
+            $sql = "INSERT INTO roleOfUser VALUES (:id, :role, :user)";
             $stmt = $this->connect()->prepare($sql);
+            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":user", $user);
             $stmt->bindParam(":role", $role);
             $stmt->execute();
@@ -27,12 +28,10 @@ class RoleOfUser extends Database {
         }
     }
 
-    public function edit($id, $user, $role) {
+    public function delete($id) {
         try {
-            $sql = "UPDATE roleOfUser SET user_id = :user, role_id = :role WHERE id = :id";
+            $sql = "DELETE FROM roleOfUser WHERE id = :id";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->bindParam(":user", $user);
-            $stmt->bindParam(":role", $role);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (PDOException $e) {
@@ -40,11 +39,11 @@ class RoleOfUser extends Database {
         }
     }
 
-    public function delete($id) {
+    public function deleteAll($user) {
         try {
-            $sql = "DELETE FROM roleOfUser WHERE id = :id";
+            $sql = "DELETE FROM roleOfUser WHERE user_id = :id";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":id", $user);
             $stmt->execute();
         } catch (PDOException $e) {
             die("Error: " . $e->getMessage());

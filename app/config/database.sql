@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS address (
     city VARCHAR(50),
     district VARCHAR(50),
     street VARCHAR(50),
-    code_postal VARCHAR(10),
+    postal_code VARCHAR(10),
     email VARCHAR(50),
-    telephone INT
+    telephone INT,
+    date TIMESTAMP
 );
 
 -- Permission Taqle
@@ -69,6 +70,7 @@ CREATE TABLE IF NOT EXISTS user (
     gendre VARCHAR(50),
     address_id VARCHAR(50),
     agency_id VARCHAR(50),
+    date TIMESTAMP,
     FOREIGN KEY (address_id) REFERENCES address(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (agency_id) REFERENCES agency(id) ON DELETE CASCADE ON UPDATE CASCADE
 
