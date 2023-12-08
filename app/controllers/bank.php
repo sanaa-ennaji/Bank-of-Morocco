@@ -8,8 +8,8 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // ---------  ADD --------- //
-
-        if(isset($_POST['submit'])) {
+        
+        if(isset($_POST['add'])) {
 
             $name = $_POST['name'];
             $logo = $_POST['logo'];
