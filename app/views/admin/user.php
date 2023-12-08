@@ -2,7 +2,7 @@
 
     // require(__DIR__ ."/../../controllers/bank.php");
     require("components/check.php");
-
+    require("components/sub.php");
 ?>
 
 <!DOCTYPE html>

@@ -11,7 +11,7 @@
 
     // ---------=  ADD =--------- //
 
-        if(isset($_POST['submit'])) {
+        if(isset($_POST['add'])) {
 
              // ---------  ADDRESS PROPS --------- //
         
@@ -31,7 +31,8 @@
             $random = new Random();
 
             $id = $random->get();
-            $address->add($id, $city, $district, $street, $codePostal, $email, $telephone);
+            $date = date("Y-m-d h:i:s");
+            $address->add($id, $city, $district, $street, $codePostal, $email, $telephone, $date);
             $lastAddress = $address->getLast();
             $addressId = $lastAddress['id'];
 

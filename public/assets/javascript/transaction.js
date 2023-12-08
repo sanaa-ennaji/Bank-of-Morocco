@@ -7,14 +7,13 @@ $(document).ready(function() {
         'serverSide': true,
         'serverMethod': 'post',
         'ajax': {
-            'url':'../app/controllers/account.php'
+            'url':'../app/controllers/transaction.php'
         },
         'columns': [
             { data: 'id' },
-            { data: 'rib' },
-            { data: 'currency' },
-            { data: 'balance' },
-            { data: 'user_id' },
+            { data: 'type' },
+            { data: 'amount' },
+            { data: 'account_id' },
             { data: 'id',
                 render : function(data, type, row) {
                     return '<td class="border-x-2 border-b-2 border-black"><button class="delete" type="button" data-id=' + data + '><i class="fa-solid fa-trash-can"></i></button></td><td class="border-x-2 border-b-2 border-black"><button class="edit" type="button" data-id=' + data + '><i class="fa-solid fa-pen-nib"></i></button></td>'
@@ -31,7 +30,7 @@ $(document).ready(function() {
         let id = $(this).data('id');
         // $row = $(this).parents("tr");
         $.ajax({
-            url: '../app/controllers/account.php',
+            url: '../app/controllers/transaction.php',
             type: 'GET',
             data: {
                 'delete': 1,
@@ -66,10 +65,10 @@ $(document).ready(function() {
         // let name = $('#name').val();
         // let logo = $('#logo').val();
         let formData = new FormData(this);
-        console.log(this);
+        console.log(formData.get('name'));
         formData.append('add', 1);
         $.ajax({
-            url: '../app/controllers/account.php',
+            url: '../app/controllers/transaction.php',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -85,10 +84,9 @@ $(document).ready(function() {
                 $('#edit-form').removeClass("hidden");
                 $('#add-form').removeClass("hidden");
                 $('#id').val('');
-                $('#rib').val('');
-                $('#currency').val('');
-                $('#balance').val('');
-                $('#user_id').val('');
+                $('#type').val('');
+                $('#amount').val('');
+                $('#account_id').val('');
             }
         });
     });
@@ -96,7 +94,7 @@ $(document).ready(function() {
     $(document).on('click', '.edit', function(){
         let id = $(this).data('id');
         $.ajax({
-            url: '../app/controllers/account.php',
+            url: '../app/controllers/transaction.php',
             type: 'GET',
             data: {
                 'edit': 1,
@@ -109,12 +107,9 @@ $(document).ready(function() {
                 $("#form-wrapper").addClass("scale-100");
                 $('#add-form').addClass("hidden");
                 $('#edit-id').val(data['id']);
-                $('#edit-rib').val(data['rib']);
-                $('#edit-currency').val(data['currency']);
-                $('#edit-balance').val(data['balance']);
-                $('#edit-user_id').val(data['user_id']);
-
-                // waaaaaa rayane
+                $('#edit-type').val(data['type']);
+                $('#edit-amount').val(data['amount']);
+                $('#edit-account_id').val(data['account_id']);
 
             }
         });
@@ -128,7 +123,7 @@ $(document).ready(function() {
         let formData = new FormData(this);
         formData.append('edit', 1);
         $.ajax({
-            url: '../app/controllers/account.php',
+            url: '../app/controllers/transaction.php',
             type: 'POST',
             data: formData,
             contentType: false,

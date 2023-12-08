@@ -2,6 +2,7 @@
 
     // require(__DIR__ ."/../../controllers/bank.php");
     require("components/check.php");
+    session_start();
 
 
 ?>
@@ -21,6 +22,10 @@
     <!--  SIDEBAR  -->
     <?php include("components/sidebar.html") ?>
     <!--  SIDEBAR  -->
+
+    <?php foreach($_SESSION["roles"] as $role): ?>
+            
+    <?php if (in_array("sub", $role)) { ?>
 
     <!-- OVERLAY -->
     <div id="overlay" class="bg-black w-full h-[100vh] opacity-0 z-[-1] absolute transition ease-in-out delay-15"></div>
@@ -67,15 +72,23 @@
     </section>
     <!-- FORM -->
 
+    <?php } ?>
+    <?php endforeach; ?>
+
     <main class="w-[85%]">
 
         <!--  HEADER  -->
             <?php include("components/header.html") ?>
         <!--  HEADER  -->
         <section class="w-full h-[90%] bg-gray-200 flex justify-center items-center">
+            <?php foreach($_SESSION["roles"] as $role): ?>
+        
+            <?php if (in_array("sub", $role)) { ?>
             <button id="add" type="button" class="w-14 h-[80%] bg-black text-white text-center rounded-l-lg">
                 <i class="fa-solid fa-plus"></i>
             </button>
+            <?php } ?>
+            <?php endforeach; ?>
             <div class="w-[80%] h-[80%] bg-white rounded-r-lg p-8">
                 <table id="table" class="w-[90%] mx-auto text-center py-4 cell-border">
                     <thead class="bg-black text-white">
