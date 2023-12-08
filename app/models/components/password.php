@@ -1,3 +1,3 @@
 <?php
-    define("PW", "new_password");
+    define("PW", "root");
 ?>

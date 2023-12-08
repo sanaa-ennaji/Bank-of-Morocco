@@ -59,9 +59,9 @@
                         bank_id LIKE :bank_id) ";
                 $searchArray = array( 
                         'id'=>"%$searchValue%",
-                        'longitude'=>"%$searchValue%"
-                        'latitude'=>"%$searchValue%"
-                        'address'=>"%$searchValue%"
+                        'longitude'=>"%$searchValue%",
+                        'latitude'=>"%$searchValue%",
+                        'address'=>"%$searchValue%",
                         'bank_id'=>"%$searchValue%"
                 );
                 }
@@ -85,8 +85,8 @@
                     $data[] = array(
                         "id"=>$row['id'],
                         "longitude"=>$row['longitude'],
-                        "latitude"=>$row['latitude']
-                        "address"=>$row['address']
+                        "latitude"=>$row['latitude'],
+                        "address"=>$row['address'],
                         "bank_id"=>$row['bank_id']
                     );
                 }

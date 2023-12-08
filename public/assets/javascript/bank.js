@@ -61,12 +61,10 @@ $(document).ready(function() {
 
     $(document).on('submit', '#add-form', function(e){
         e.preventDefault();
-        $('#id').val('');
-        $('#name').val('');
-        $('#logo').val('');
         // let name = $('#name').val();
         // let logo = $('#logo').val();
         let formData = new FormData(this);
+        console.log(formData.get('name'));
         formData.append('add', 1);
         $.ajax({
             url: '../app/controllers/bank.php',
@@ -84,6 +82,9 @@ $(document).ready(function() {
                 $("#overlay").removeClass("opacity-50 z-10");
                 $('#edit-form').removeClass("hidden");
                 $('#add-form').removeClass("hidden");
+                $('#id').val('');
+                $('#name').val('');
+                $('#logo').val('');
             }
         });
     });
