@@ -7,47 +7,142 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $name = $_POST['name'];
-        $logo = $_POST['logo'];
-
-    // ---------  EDIT --------- //
-
-        if(isset($_POST['submit']) && $_POST['submit'] == 'Edit') {
-
-            $id = $_POST['id'];
-
-            $bank->edit($id, $name, $logo);
-
     // ---------  ADD --------- //
 
-        } else if(isset($_POST['submit']) && $_POST['submit'] == 'Submit') {
+        if(isset($_POST['submit'])) {
+
+            $name = $_POST['name'];
+            $logo = $_POST['logo'];
 
             $random = new Random();
             
             $id = $random->get();
-            $bank->add($id, $name, $logo);
-        }
+            try{
+                $bank->add($id, $name, $logo);
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
 
-        // header("Location: ../views/admin/index.php");
+    // ---------  EDIT --------- //
+
+
+        } else if(isset($_POST['edit'])) {
+
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $logo = $_POST['logo'];
+            try{
+                $bank->edit($id, $name, $logo);
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+
+    // ---------  DISPLAY --------- //
+
+        } else {
+
+            // Reading value
+            $draw = $_POST['draw'];
+            $row = $_POST['start'];
+            $rowperpage = $_POST['length']; // Rows display per page
+            $columnIndex = $_POST['order'][0]['column']; // Column index
+            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+            $searchValue = $_POST['search']['value']; // Search value
+
+            $searchArray = array();
+
+            // Search
+            $searchQuery = " ";
+            if($searchValue != ''){
+            $searchQuery = " AND (id LIKE :id OR 
+                    name LIKE :name) ";
+            $searchArray = array( 
+                    'id'=>"%$searchValue%",
+                    'name'=>"%$searchValue%"
+            );
+            }
+
+            try {
+                // Total number of records without filtering
+                $totalRecords = $bank->totalRecords();
+
+                // Total number of records with filtering
+                $totalRecordwithFilter = $bank->totalRecordwithFilter($searchQuery, $searchArray);
+
+                // Fetch records
+                $records = $bank->filteredRecordwithSorting($searchQuery, $searchArray, $columnName, $columnSortOrder, $row, $rowperpage);
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+
+            $data = array();
+
+            foreach ($records as $row) {
+                $data[] = array(
+                    "id"=>$row['id'],
+                    "name"=>$row['name'],
+                    "logo"=>$row['logo']
+                );
+            }
+
+            // Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+
+            echo json_encode($response);
+
+        }
     }
 
     // ---------  DELETE --------- //
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-        if(isset($_GET['id'])) {
+        if(isset($_GET['delete'])) {
 
-            $id = $_GET['id'];
-            $bank->delete($id);
+            if(isset($_GET['id'])) {
 
-            header("Location: ../views/admin/index.php");
+                $id = $_GET['id'];
+                $bank->delete($id);
+
+            }
+
+        } else if (isset($_GET['edit'])) {
+            
+            if(isset($_GET['id'])) {
+
+                $id = $_GET['id'];
+                $data = $bank->search($id);
+
+                echo json_encode($data);
+
+            }
+
+        }else{
+            // $banks = $bank->display();
+
+            // foreach($banks as $bank):
+            //     $html = "";
+            //     $html .= '<tr>
+            //         <td class="border-x-2 border-b-2 border-black">' .$bank['id'] . '</td>
+            //         <td class="border-b-2 border-black">' . $bank['name'] . '</td>
+            //         <td class="border-b-2 border-l-2 border-black">' . $bank['logo'] . '</td>
+            //         <td class="border-x-2 border-b-2 border-black">
+            //             <button class="delete" type="button" data-id=' . $bank['id'] . '>
+            //                 DELETE
+            //             </a>
+            //         </td>
+            //     </tr>';
+            // endforeach;
+
+            // echo $html;
         }
 
     }
-
-    // ---------  DISPLAY --------- //
-    
-    $banks = $bank->display();
-
 
 ?>
