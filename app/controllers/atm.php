@@ -109,7 +109,9 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-        if(isset($_GET['delete'])) {
+
+    if(isset($_GET['delete'])) {
+
         if(isset($_GET['id'])) {
 
             $id = $_GET['id'];
