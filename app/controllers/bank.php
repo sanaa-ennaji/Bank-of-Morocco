@@ -123,24 +123,6 @@
 
             }
 
-        }else{
-            // $banks = $bank->display();
-
-            // foreach($banks as $bank):
-            //     $html = "";
-            //     $html .= '<tr>
-            //         <td class="border-x-2 border-b-2 border-black">' .$bank['id'] . '</td>
-            //         <td class="border-b-2 border-black">' . $bank['name'] . '</td>
-            //         <td class="border-b-2 border-l-2 border-black">' . $bank['logo'] . '</td>
-            //         <td class="border-x-2 border-b-2 border-black">
-            //             <button class="delete" type="button" data-id=' . $bank['id'] . '>
-            //                 DELETE
-            //             </a>
-            //         </td>
-            //     </tr>';
-            // endforeach;
-
-            // echo $html;
         }
 
     }
