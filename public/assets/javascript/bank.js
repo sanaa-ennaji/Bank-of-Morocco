@@ -46,42 +46,44 @@ $(document).ready(function() {
 
     $(document).on('click', '#add', function(){
         $("#overlay").addClass("opacity-50 z-10");
-        $("#form").addClass("scale-100");
-        $('#edit').addClass("hidden");
+        $("#form-wrapper").addClass("scale-100");
+        $('#edit-form').addClass("hidden");
         // console.log(1);
     });
 
     $(document).on('click', '#overlay', function(){
-        $('#id').val('');
-        $('#name').val('');
-        $('#logo').val('');
-        $("#form").removeClass("scale-100");
+        $("#form-wrapper").removeClass("scale-100");
         $("#overlay").removeClass("opacity-50 z-10");
-        $('#edit').removeClass("hidden");
-        $('#submit').removeClass("hidden");
+        $('#edit-form').removeClass("hidden");
+        $('#add-form').removeClass("hidden");
         // console.log(1);
     });
 
-    $(document).on('click', '#submit', function(){
-        let name = $('#name').val();
-        console.log(name);
-        let logo = $('#logo').val();
-        console.log(logo);
+    $(document).on('submit', '#add-form', function(e){
+        e.preventDefault();
+        $('#id').val('');
+        $('#name').val('');
+        $('#logo').val('');
+        // let name = $('#name').val();
+        // let logo = $('#logo').val();
+        let formData = new FormData(this);
+        formData.append('add', 1);
         $.ajax({
             url: '../app/controllers/bank.php',
             type: 'POST',
-            data: {
-                'name': name,
-                'logo': logo,
-                'submit': 1
-            },
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData:false,
             success: function(response){
                 // remove the deleted comment
                 // $row.remove();
                 table.draw();
                 $('#table').css("width", "100%");
-                $("#form").removeClass("scale-100");
+                $("#form-wrapper").removeClass("scale-100");
                 $("#overlay").removeClass("opacity-50 z-10");
+                $('#edit-form').removeClass("hidden");
+                $('#add-form').removeClass("hidden");
             }
         });
     });
@@ -99,36 +101,39 @@ $(document).ready(function() {
                 // remove the deleted comment
                 let data = JSON.parse(response);
                 $("#overlay").addClass("opacity-50 z-10");
-                $("#form").addClass("scale-100");
-                $('#submit').addClass("hidden");
-                $('#id').val(data['id']);
-                $('#name').val(data['name']);
-                $('#logo').val(data['logo']);
+                $("#form-wrapper").addClass("scale-100");
+                $('#add-form').addClass("hidden");
+                $('#edit-id').val(data['id']);
+                $('#edit-name').val(data['name']);
+                $('#edit-logo').val(data['logo']);
 
             }
         });
     });
 
-    $(document).on('click', '#edit', function(){
-        let id = $('#id').val();
-        let name = $('#name').val();
-        let logo = $('#logo').val();
+    $(document).on('submit', '#edit-form', function(e){
+        e.preventDefault();
+        // let id = $('#id').val();
+        // let name = $('#name').val();
+        // let logo = $('#logo').val();
+        let formData = new FormData(this);
+        formData.append('edit', 1);
         $.ajax({
             url: '../app/controllers/bank.php',
             type: 'POST',
-            data: {
-                'edit': 1,
-                'id': id,
-                'name': name,
-                'logo': logo
-            },
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData:false,
             success: function(response){
                 // remove the deleted comment
                 // $row.remove();
                 table.draw();
                 $('#table').css("width", "100%");
-                $("#form").removeClass("scale-100");
+                $("#form-wrapper").removeClass("scale-100");
                 $("#overlay").removeClass("opacity-50 z-10");
+                $('#edit-form').removeClass("hidden");
+                $('#add-form').removeClass("hidden");
             }
         });
     });
