@@ -9,6 +9,8 @@
                     <label>Logo:</label>
                     <input class="bg-gray-300 rounded p-1" type="text" name="logo" id="logo">
                 </div>
+                <input type="checkbox" name="checkbox" value="1" id="checkbox" class="checkbox" checked>
+                <input type="checkbox" name="checkbox" value="2" id="checkbox" class="checkbox" checked>
             </div>
             <div class="flex flex-col">
                 <!-- <button id="edit" class="w-[30%] rounded m-auto bg-green-500 text-white p-1" type="button">SUBMIT</button>
@@ -23,9 +25,20 @@
         $(document).ready(function(){
             $("#form").on("submit", function(e){
                 e.preventDefault();
+                // $(".checkbox").each(function(){
+                //     console.log($(this).val());
+                // });
+                // console.log($(".chackbox"));
+                array = jQuery.makeArray($(".checkbox"));
+                let data1 = [];
+                    array.forEach(e => {
+                        data1.push(e.value);
+                    });
+                // console.log(data1);
                 data = new FormData(this);
-                data.append('submit', 1)
-                console.log(data.get('name'));
+                data.append('submit', 1),
+                data.append('checks', data1)
+                // console.log(data.get('checkbox'));
 
                 $.ajax({
                     url: 'testing.php',
@@ -35,6 +48,8 @@
                     cache: false,
                     processData:false,
                     success: function(response){
+                        let data = JSON.parse(response);
+                        console.log(data);
                     }
                 });
             });

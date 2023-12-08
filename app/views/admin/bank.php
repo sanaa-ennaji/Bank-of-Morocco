@@ -34,7 +34,7 @@
                 </div>
                 <div class="w-[45%] flex flex-col">
                     <label>Logo:</label>
-                    <input class="bg-gray-300 rounded p-1" type="text" name="logo" id="logo">
+                    <input class="bg-gray-300 rounded p-1" type="file" name="logo" id="logo">
                 </div>
             </div>
             <div class="flex flex-col">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="w-[45%] flex flex-col">
                     <label>Logo:</label>
-                    <input class="bg-gray-300 rounded p-1" type="text" name="logo" id="edit-logo">
+                    <input class="bg-gray-300 rounded p-1" type="file" name="logo" id="edit-logo">
                 </div>
             </div>
             <div class="flex flex-col">
