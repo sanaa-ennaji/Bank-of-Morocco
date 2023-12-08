@@ -82,7 +82,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function(){
             $("#table").DataTable({
                 'processing': true,
@@ -98,20 +98,20 @@
 		      	]
             })
         });
-    </script> -->
+    </script>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
 		$(document).ready(function() {
 		    $('#table').DataTable();
 		} );
-	</script>
+	</script> -->
 
     
 
 </head>
 <body>
 
-    <!-- <div class="container mt-5">
+    <div class="container mt-5">
 		<table id="table" class="display" style="width:100%">
 	        <thead>
 	            <tr>
@@ -121,7 +121,7 @@
 	            </tr>
 	        </thead>
 	    </table>
-	</div> -->
+	</div>
     
     <!-- <form action="index.php" method="post">
         <select type="text" name="type">
@@ -142,7 +142,7 @@
         <input type="submit" name="submit" value="Submit">
     </form> -->
 
-    <div class="container mt-5">
+    <!-- <div class="container mt-5">
 		<table id="table" class="display" style="width:100%">
 	        <thead>
 	            <tr>
@@ -163,10 +163,10 @@
                 <?php endforeach; ?>
             </tbody>
 	    </table>
-	</div>
+	</div> -->
 
 
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
-    <script src="main.js"></script>
+    <!-- <script src="main.js"></script> -->
 </body>
 </html>

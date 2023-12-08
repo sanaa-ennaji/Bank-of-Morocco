@@ -8,6 +8,7 @@
             try {
                 $sql = "INSERT INTO bank VALUES (:id, :name, :logo)";
                 $stmt = $this->connect()->prepare($sql); 
+                $stmt->bindParam(":id", $id);
                 $stmt->bindParam(":name", $name);
                 $stmt->bindParam(":logo", $logo);
                 $stmt->execute();
@@ -64,6 +65,56 @@
                 die("Error: " . $e->getMessage());
             }
         }
+
+        public function totalRecords(){
+            $db = $this->connect();
+
+            try {
+                $stmt = $db->prepare("SELECT COUNT(*) AS allcount FROM bank ");
+                $stmt->execute();
+                $records = $stmt->fetch();
+                $data = $records['allcount'];
+                return $data;
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+        }
+
+        public function totalRecordwithFilter($searchQuery, $searchArray){
+            $db = $this->connect();
+
+            try {
+                $stmt = $db->prepare("SELECT COUNT(*) AS allcount FROM bank WHERE 1 ".$searchQuery);
+                $stmt->execute($searchArray);
+                $records = $stmt->fetch();
+                $data = $records['allcount'];
+                return $data;
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+        }
+
+        public function filteredRecordwithSorting($searchQuery, $searchArray, $columnName, $columnSortOrder, $row, $rowperpage){
+            $db = $this->connect();
+
+            try {
+                $stmt = $db->prepare("SELECT * FROM bank WHERE 1 ".$searchQuery." ORDER BY ".$columnName." ".$columnSortOrder." LIMIT :limit,:offset");
+
+                foreach ($searchArray as $key=>$search) {
+                    $stmt->bindValue(':'.$key, $search,PDO::PARAM_STR);
+                }
+
+                $stmt->bindValue(':limit', (int)$row, PDO::PARAM_INT);
+                $stmt->bindValue(':offset', (int)$rowperpage, PDO::PARAM_INT);
+                $stmt->execute();
+                $data = $stmt->fetchAll();
+                return $data;
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+        }
+
+        
     }
 
 ?>
