@@ -4,7 +4,7 @@ $(document).ready(function(){
     // });
 
     $("#select").on("click", function(){
-        // console.log($(this).val());
+       zz
         let $html = $(`<input type="checkbox" name="checkbox" value="${$(this).val()}" id="checkbox" class="checkbox" checked>`);
 
         $("#test").append($html);
