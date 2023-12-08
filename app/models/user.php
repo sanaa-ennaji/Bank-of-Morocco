@@ -169,6 +169,25 @@
 
         }
 
+        public function getRoles($id){
+            $db = $this->connect();
+
+            try {
+                $sql = "SELECT role.name FROM user JOIN roleOfUser ON user.id = roleOfUser.user_id JOIN role ON roleOfUser.role_id = role.name JOIN address ON user.address_id = address.id WHERE user.id = :id";
+
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(":id", $id);
+
+                $stmt->execute();
+
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                die("Error: " . $e->getMessage());
+            }
+
+        }
+
         public function totalRecords(){
             $db = $this->connect();
 

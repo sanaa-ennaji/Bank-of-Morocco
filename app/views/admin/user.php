@@ -1,6 +1,7 @@
 <?php
 
     // require(__DIR__ ."/../../controllers/bank.php");
+    require("components/check.php");
 
 ?>
 
@@ -78,21 +79,21 @@
                     <input class="bg-gray-300 rounded p-1" type="text" name="telephone" id="telephone">
                 </div>
             </div>
-            <div class="flex justify-between">
-                <div class="w-[40%] flex flex-col justify-evenly">
+            <div class="flex justify-between items-center">
+                <div class="w-[35%] flex flex-col justify-evenly">
                     <label>Agency:</label>
                     <select class="bg-gray-300 rounded p-1" name="agency" id="agency">
                         <option value="1">1</option>
                     </select>
                 </div>
-                <div class="w-[40%] flex flex-col">
+                <div class="w-[35%] flex flex-col">
                     <label>Role:</label>
                     <select class="bg-gray-300 rounded p-1" name="role" id="role">
-                        <option id="admin" value="admin">admin</option>
-                        <option id="client" value="client">client</option>
+                        <!-- <option id="admin" value="admin">admin</option>
+                        <option id="client" value="client">client</option> -->
                     </select>
                 </div>
-                <div id="checkbox-wrapper" class="w-[5%] flex flex-col justify-evenly"></div>
+                <div id="checkbox-wrapper" class="w-[20%] grid gap-1" style="grid-template-columns: repeat(2, 1fr);"></div>
             </div>
             <div class="flex flex-col">
                 <!-- <button id="edit" class="w-[30%] rounded m-auto bg-green-500 text-white p-1" type="button">SUBMIT</button>
@@ -150,20 +151,12 @@
                 </div>
             </div>
             <div class="flex justify-between">
-                <div class="w-[45%] flex flex-col justify-evenly">
+                <div class="w-[100%] flex flex-col justify-evenly">
                     <label>Agency:</label>
                     <select class="bg-gray-300 rounded p-1" name="agency" id="agency">
                         <option value="1">1</option>
                     </select>
                 </div>
-                <div class="w-[45%] flex flex-col">
-                    <label>Role:</label>
-                    <select class="bg-gray-300 rounded p-1" name="role" id="role">
-                        <option value="admin">admin</option>
-                        <option value="client">client</option>
-                    </select>
-                </div>
-                <div id="checkbox-wrapper" class="w-[45%] flex flex-col justify-evenly"></div>
             </div>
             <div class="flex flex-col">
                 <!-- <button id="edit" class="w-[30%] rounded m-auto bg-green-500 text-white p-1" type="button">SUBMIT</button>

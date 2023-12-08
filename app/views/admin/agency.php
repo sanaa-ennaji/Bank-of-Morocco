@@ -1,6 +1,7 @@
 <?php
 
     // require(__DIR__ ."/../../controllers/agency.php");
+    require("components/check.php");
 
 ?>
 

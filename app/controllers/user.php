@@ -3,11 +3,13 @@
     require_once(__DIR__ . "/../models/random.php");
     require_once(__DIR__ . "/../models/address.php");
     require_once(__DIR__ . "/../models/user.php");
+    require_once(__DIR__ . "/../models/role.php");
     require_once(__DIR__ . "/../models/roleOfUser.php");
 
     $address = new Address();
     $user = new User();
     $roleOfUser = new RoleOfUser();
+    $role = new Role();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -27,7 +29,7 @@
             // ---------  USER PROPS --------- //
 
             $username = $_POST['username'];
-            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+            $password = password_hash($_POST['pw'], PASSWORD_BCRYPT);
             $nationality = $_POST['nationality'];
             $gendre = $_POST['gendre'];
             $agencyId = $_POST['agency'];
@@ -89,12 +91,6 @@
             $address->edit($currentAddressId, $city, $district, $street, $codePostal, $email, $telephone);
 
             $user->edit($id, $username, $nationality, $gendre, $agencyId);
-
-            $roleOfUser->deleteAll($id);
-            // some loop through roles in post
-            $random = new Random();
-            $newId = $random->get();
-            $roleOfUser->add($newId, $id, $roleId);
             
         }  else {
 
@@ -188,6 +184,22 @@
             $id = $_GET['id'];
             $data = $user->searchAll($id);
 
+            echo json_encode($data);
+
+        }
+
+    } else if (isset($_GET['get'])) {
+
+        if(isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+            $data = $user->getRoles($id);
+
+            echo json_encode($data);
+
+        } else {
+
+            $data = $role->display();
             echo json_encode($data);
 
         }

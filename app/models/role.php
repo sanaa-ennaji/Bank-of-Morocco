@@ -21,7 +21,7 @@ class Role extends Database {
         $db = $this->connect();
 
         try {
-            $sql = "SELECT * FROM role";
+            $sql = "SELECT name FROM role";
             $query = $db->query($sql);
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;

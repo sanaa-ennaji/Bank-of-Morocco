@@ -1,5 +1,7 @@
 <?php
 // require(__DIR__ . "/../../controllers/transaction.php");
+require("components/check.php");
+
 ?>
 
 <!DOCTYPE html>

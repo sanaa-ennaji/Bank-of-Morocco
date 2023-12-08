@@ -1,7 +1,7 @@
 <?php
 
     // require(__DIR__ ."/../../controllers/atm.php");
-
+    require("components/check.php");
 ?>
 
 <!DOCTYPE html>

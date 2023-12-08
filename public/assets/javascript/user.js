@@ -37,7 +37,7 @@ $(document).ready(function() {
 
         $("#checkbox-wrapper").append($html);
 
-        $(this).find(`#${$(this).val()}`).addClass("hidden");
+        $(this).find(`#${$(this).val()}`).remove();
 
 
 
@@ -45,9 +45,10 @@ $(document).ready(function() {
 
             $(this).next().remove();
             $(this).remove();
-            // if(!$("#role").find(`#${$(this).val()}`).length){
-                $("#role").find(`#${$(this).val()}`).removeClass("hidden");
-            // }
+            if(!$("#role").find(`#${$(this).val()}`).length){
+                let $html = $(`<option value="${$(this).val()}" id="${$(this).val()}">${$(this).val()}</option>`);
+                $("#role").append($html);
+            }
 
 
         });
@@ -73,6 +74,23 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#add', function(){
+        $.ajax({
+            url: '../app/controllers/user.php',
+            type: 'GET',
+            data: {
+                'get': 1,
+            },
+            success: function(response){
+                let data = JSON.parse(response);
+                data = jQuery.makeArray(data);
+                let html = "";
+                data.forEach(e => {
+                    html = "<option value=" + e.name + " id=" + e.name + ">" + e.name + "</option>";
+                    $("#role").append(html);
+                });
+                console.log(data[1].name);
+            }
+        });
         $("#overlay").addClass("opacity-50 z-10");
         $("#form-wrapper").addClass("scale-100");
         $('#edit-form').addClass("hidden");
@@ -84,6 +102,10 @@ $(document).ready(function() {
         $("#overlay").removeClass("opacity-50 z-10");
         $('#edit-form').removeClass("hidden");
         $('#add-form').removeClass("hidden");
+        $("#checkbox-wrapper").empty();
+        $("#role").empty();
+        // let $html = $(`<option value="admin" id="admin">admin</option><option value="client" id="client">client</option>`);
+        // $("#role").append($html);
         // console.log(1);
     });
 
@@ -127,8 +149,12 @@ $(document).ready(function() {
                 $('#email').val('');
                 $('#telephone').val('');
                 $("#checkbox-wrapper").empty();
+                $("#role").empty();
+                // let $html = $(`<option value="admin" id="admin">admin</option><option value="client" id="client">client</option>`);
+                // $("#role").append($html);
                 let data = JSON.parse(response);
                 console.log(data);
+                
                 // console.log(response);
             }
         });

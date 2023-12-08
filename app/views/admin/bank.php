@@ -1,6 +1,8 @@
 <?php
 
     // require(__DIR__ ."/../../controllers/bank.php");
+    require("components/check.php");
+
 
 ?>
 
