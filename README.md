@@ -80,6 +80,3 @@ Bank of Morocco souhaite améliorer son système bancaire afin de renforcer la s
 - JIRA, AZUREDEVOPS, ou autre outil de gestion de projet.
 - Utilisation de DataTable pour la gestion des tableaux.
 
-## Calendrier de Projet
-
-Le projet devrait être complété dans un délai de [insérer la durée prévue] à compter de la date de début du développement.
